@@ -1,0 +1,189 @@
+{
+  // For format details, see https://aka.ms/devcontainer.json. For config options, see the
+  // README at: https://github.com/devcontainers/templates/tree/main/src/python
+  "name": "Python Project Dev Container",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  // TODO: Update to your desire version.
+	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  
+  // Features: remove unused.
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    },
+    
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "installOhMyZshConfig": true,
+      "upgradePackages": true
+    },
+    
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "installGitLFS": true
+    },
+
+   "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.13",
+      "installPath": "/usr/local/python/current/bin",
+      "installTools": true,
+      "toolsToInstall": "uv,uvx"
+    },
+ 
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "installDockerBuildx": true,
+      "installDockerComposeSwitch": true,
+      "dockerDashComposeVersion": "2"
+    }   
+  },
+
+  "containerEnv": {
+    "UV_LINK_MODE": "copy",
+    "UV_VIRTUAL_ENV": "/workspaces/pytemplate/.venv",
+    "UV_PYTHONPATH": "/workspaces/pytemplate/app"
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "always",
+            "source.organizeImports": "always"
+          }
+        },
+        "python.languageServer": "Pylance",
+        "python.defaultInterpreterPath": "/workspaces/pytemplate/.venv/bin/python",
+        "python.formatting.provider": "ruff",
+        "python.testing.pytestEnabled": true,
+        "python.testing.autoTestDiscoverOnSaveEnabled": true,
+        "python.testing.cwd": "/workspaces/pytemplate/app",
+        "python.testing.unittestEnabled": false,
+
+        // Ruff
+        "ruff.linting": true,
+        "ruff.enable": true,
+        "ruff.lint.enable": true,
+        "ruff.lineLength": 120,
+        "ruff.lintingEnabled": true,
+        "ruff.nativeServer": "on",
+        "ruff.interpreter": [
+          "/workspaces/pytemplate/.venv/bin/python"
+        ],
+        "ruff.importStrategy": "fromEnvironment",
+        "ruff.configurationPreference": "editorFirst",
+        "ruff.organizeImports": true,
+        "ruff.showSyntaxErrors": true,
+
+        // UV
+        "python-uv.venvPath": "/workspaces/pytemplate/.venv",
+        "python-uv.venvName": ".venv",
+        "python-uv.venvAutoDetect": true,
+        "python-uv.venvAutoCreate": true,
+        "python-uv.venvAutoSync": true,
+        "python-uv.venvAutoSyncAllGroups": true,
+        "python-uv.venvAutoSyncOnSave": true,
+        "python-uv.venvAutoSyncOnSaveAllGroups": true,
+        "python-uv.pythonPath": "/workspaces/pytemplate/.venv/bin/python",
+        "python-uv.uvPath": "/usr/local/py-utils/bin/uv",
+        "python-uv.uvAutoDetect": true,
+
+        // mypy
+        "mypy.runUsingActiveInterpreter": true,
+        "mypy.enabled": true,
+        "mypy.configFile": "/workspaces/pytemplate/pyproject.toml",
+        "mypy.dmypyExecutable": "/workspaces/pytemplate/.venv/bin/dmypy",
+
+        "json.schemas": [
+          {
+            "fileMatch": [
+              ".devcontainer/devcontainer.json",
+              "devcontainer.json",
+              "**/devcontainer.json"
+            ],
+            "url": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json"
+          }
+        ],
+        "json.schemaDownload.enable": true,
+        "json.format.enable": true,
+        "json.format.keepLines": true,
+        "json.validate.enable": true,
+
+        "[toml]": {
+          "editor.defaultFormatter": "tamasfe.even-better-toml",
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+          },
+          "editor.formatOnSave": true,
+          "editor.formatOnType": true
+        },
+
+        "git.terminalAuthentication": false,
+        "github.gitAuthentication": true,
+        "yaml.schemas": {
+          "https://json.schemastore.org/github-workflow.json": [
+            ".github/workflows/*.yml",
+            ".github/workflows/*.yaml"
+          ],
+          "https://json.schemastore.org/docker-compose.json": [
+            "docker-compose.yml",
+            "docker-compose.*.yml"
+          ]
+        }
+      },
+
+      "extensions": [
+        // Theme and Icons
+        "atommaterial.a-file-icon-vscode",
+        "vira.vsc-vira-theme",
+        
+        // Git and GitHub
+        "GitHub.vscode-pull-request-github",
+        "GitHub.codespaces",
+        "github.vscode-github-actions",
+        "donjayamanne.githistory",
+        "codezombiech.gitignore",
+        "eamodio.gitlens",
+        "GitHub.remotehub",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode-remote.remote-wsl",
+        "docker.docker",
+        "ms-vscode.remote-repositories",
+        
+        // AI assistants
+        "github.copilot",
+        "github.copilot-chat",
+        
+        // Python
+        "ms-python.debugpy",
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "quicktype.quicktype",
+        "the0807.uv-toolkit",
+        "matangover.mypy",
+        
+        // Jupyter and Data Science
+        "ms-toolsai.jupyter",
+        "ms-toolsai.vscode-jupyter-cell-tags",
+        "ms-toolsai.vscode-jupyter-slideshow",
+        
+        // Yaml, JSON, TOML
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+
+        // Markdown
+        "yzhang.markdown-all-in-one",
+
+        // Jira & confluence
+        "atlassian.atlascode"
+      ]
+    }
+  },
+  "postCreateCommand": "cd /workspaces/pytemplate && uv venv .venv --clear && uv sync --all-groups && uv run pre-commit install -c .pre-commit-config.yaml",
+  "remoteUser": "vscode"
+}
+
