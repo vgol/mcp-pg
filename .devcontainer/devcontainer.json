@@ -24,11 +24,8 @@
       "installGitLFS": true
     },
 
-   "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.13",
-      "installPath": "/usr/local/python/current/bin",
-      "installTools": true,
-      "toolsToInstall": "uv,uvx"
+    "ghcr.io/va-h/devcontainers-features/uv:1": {
+      "version": "latest"
     },
  
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
@@ -41,8 +38,8 @@
 
   "containerEnv": {
     "UV_LINK_MODE": "copy",
-    "UV_VIRTUAL_ENV": "/workspaces/pytemplate/.venv",
-    "UV_PYTHONPATH": "/workspaces/pytemplate/app"
+    "UV_VIRTUAL_ENV": "/workspaces/mcp-pg/.venv",
+    "UV_PYTHONPATH": "/workspaces/mcp-pg/app"
   },
 
   "customizations": {
@@ -56,11 +53,11 @@
           }
         },
         "python.languageServer": "Pylance",
-        "python.defaultInterpreterPath": "/workspaces/pytemplate/.venv/bin/python",
+        "python.defaultInterpreterPath": "/workspaces/mcp-pg/.venv/bin/python",
         "python.formatting.provider": "ruff",
         "python.testing.pytestEnabled": true,
         "python.testing.autoTestDiscoverOnSaveEnabled": true,
-        "python.testing.cwd": "/workspaces/pytemplate/app",
+        "python.testing.cwd": "/workspaces/mcp-pg/app",
         "python.testing.unittestEnabled": false,
 
         // Ruff
@@ -71,7 +68,7 @@
         "ruff.lintingEnabled": true,
         "ruff.nativeServer": "on",
         "ruff.interpreter": [
-          "/workspaces/pytemplate/.venv/bin/python"
+          "/workspaces/mcp-pg/.venv/bin/python"
         ],
         "ruff.importStrategy": "fromEnvironment",
         "ruff.configurationPreference": "editorFirst",
@@ -79,7 +76,7 @@
         "ruff.showSyntaxErrors": true,
 
         // UV
-        "python-uv.venvPath": "/workspaces/pytemplate/.venv",
+        "python-uv.venvPath": "/workspaces/mcp-pg/.venv",
         "python-uv.venvName": ".venv",
         "python-uv.venvAutoDetect": true,
         "python-uv.venvAutoCreate": true,
@@ -87,15 +84,14 @@
         "python-uv.venvAutoSyncAllGroups": true,
         "python-uv.venvAutoSyncOnSave": true,
         "python-uv.venvAutoSyncOnSaveAllGroups": true,
-        "python-uv.pythonPath": "/workspaces/pytemplate/.venv/bin/python",
-        "python-uv.uvPath": "/usr/local/py-utils/bin/uv",
+        "python-uv.pythonPath": "/workspaces/mcp-pg/.venv/bin/python",
         "python-uv.uvAutoDetect": true,
 
         // mypy
         "mypy.runUsingActiveInterpreter": true,
         "mypy.enabled": true,
-        "mypy.configFile": "/workspaces/pytemplate/pyproject.toml",
-        "mypy.dmypyExecutable": "/workspaces/pytemplate/.venv/bin/dmypy",
+        "mypy.configFile": "/workspaces/mcp-pg/pyproject.toml",
+        "mypy.dmypyExecutable": "/workspaces/mcp-pg/.venv/bin/dmypy",
 
         "json.schemas": [
           {
@@ -183,7 +179,7 @@
       ]
     }
   },
-  "postCreateCommand": "cd /workspaces/pytemplate && uv venv .venv --clear && uv sync --all-groups && uv run pre-commit install -c .pre-commit-config.yaml",
+  "postCreateCommand": "cd /workspaces/mcp-pg && uv python install 3.14 && uv python pin 3.14 && uv venv .venv --python 3.14 --clear && uv sync --all-groups",
   "remoteUser": "vscode"
 }
 
