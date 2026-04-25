@@ -1,36 +1,84 @@
-# Project's name
+# mcp-pg
 
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![Ruff](https://img.shields.io/badge/ruff-passing-brightgreen.svg?style=flat&logo=ruff&logoColor=white)](https://github.com/astral-sh/ruff)
-[![Mypy](https://img.shields.io/badge/mypy-passing-brightgreen.svg?style=flat&logo=python&logoColor=white)](http://mypy-lang.org/)
-[![Coverage](https://img.shields.io/codecov/c/github/vgol/lazy-seller?flag=backend&logo=python&logoColor=white&label=backend%20coverage)](https://codecov.io/gh/vgol/lazy-seller)
+[![ty](https://img.shields.io/badge/ty-passing-brightgreen.svg?style=flat)](https://github.com/astral-sh/ty)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-yellow.svg)](https://opensource.org/licenses/Apache-2.0)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688.svg?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
-[![Pydantic](https://img.shields.io/badge/Pydantic-2.0%2B-3776AB.svg?style=flat&logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
-[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 
-## uv commands
+A minimal [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server written in Python.  
+The goal is to understand how MCP works by building a small playground server.
+
+## Features
+
+- **Tools** – `add` (sums two integers), `echo` (returns a message unchanged)
+- **Resource** – `info://server` (returns a description of this server)
+- **Prompt** – `greeting` (generates a friendly greeting)
+
+## Stack
+
+| Tool | Purpose |
+|------|---------|
+| [uv](https://docs.astral.sh/uv/) | Package & project management |
+| [ruff](https://docs.astral.sh/ruff/) | Linter & formatter |
+| [ty](https://github.com/astral-sh/ty) | Static type checker |
+| [pytest](https://pytest.org) | Tests |
+| [mcp](https://github.com/modelcontextprotocol/python-sdk) | MCP Python SDK |
+
+## Quickstart
 
 ```bash
-# aldredy done here
-uv init
+# Install dependencies
+uv sync
 
-# unstall, pin managed Python's versoin
-uv python list
-uv python install <python-ver>
+# Run the MCP server (stdio transport, default)
+uv run mcp-pg
 
-# add / remove packages
-uv add / remove  <package>
+# Inspect the server interactively with the MCP Inspector
+uv run mcp dev app/main.py
+```
 
-# sync packages (with upgrade)
+## Development
+
+```bash
+# Lint & format
+uv run ruff check .
+uv run ruff format .
+
+# Type-check
+uv run ty check app
+
+# Tests
+uv run pytest
+```
+
+## uv cheat-sheet
+
+```bash
+# Install / pin a specific Python version
+uv python install 3.13
+
+# Add / remove a dependency
+uv add <package>
+uv remove <package>
+
+# Add a dev-only dependency
+uv add --dev <package>
+
+# Sync (with upgrade)
 uv sync --all-groups --upgrade
 
-# re-create venv
+# Re-create the virtual environment
 uv venv --clear
 
-# run app ro tool
-
-uv run <app>
-uv tool install <tool>
+# Run a script or tool
+uv run <script>
 uv tool run <tool>
 ```
+
+## MCP concepts
+
+| Concept | Description |
+|---------|-------------|
+| **Tool** | A callable function exposed to the LLM (`@mcp.tool()`) |
+| **Resource** | Read-only data the LLM can fetch (`@mcp.resource(uri)`) |
+| **Prompt** | A reusable prompt template (`@mcp.prompt()`) |
